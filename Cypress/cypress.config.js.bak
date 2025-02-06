@@ -1,0 +1,21 @@
+
+
+const { defineConfig } = require("cypress");
+import process from 'process';
+
+module.exports = defineConfig({
+  e2e: {
+	  on('file:preprocessor', require('@cypress/webpack-preprocessor'));
+
+  // You could also add any Webpack configurations to help resolve this issue:
+  config.env.CI = process.env.CI;  // Ensure process.env variables are correctly passed into config
+
+  return config;
+	  baseUrl: 'https://client.amega.finance',
+    
+    setupNodeEvents(on, config) {
+            
+      // implement node event listeners here
+    },
+  },
+});

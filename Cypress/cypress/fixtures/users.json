@@ -1,0 +1,44 @@
+{
+
+  
+    "validloginuser": {
+      "email": "umair_ahmed_nadeem@hotmail.com",
+      "password": "Test@1234"
+    },
+
+    "invalidloginuser": {
+      "email": "umtestm@test.com",
+      "password": "Test@1234"
+    },
+
+    "missingloginUser": {
+      "email":"test@hotmail.com",
+    "password":"",
+    "rememberMe":true
+    },
+
+  "invaliduser": {
+    "firstName": "Umair",
+    "lastName": "Umair",
+    "email": "umair_ahmed_nadeem@hotmail.com",
+    "password": "Test@1234"
+    
+  },
+  "invalidUser": {
+    "firstName": "Umair",
+    "lastName": "Ahmned",
+    "email": "invalid.user@example.com",
+    "password": "invalidopassword"
+   
+  },
+   
+
+  "invalidEmail": "invalidemail.com",
+  "userWithoutFirstName": {
+   "firstName" : "Umair",
+    "lastName": "Ahmed",
+    "email": "take124@example.com",
+    "password": "SecurePass123!"
+    }
+
+}

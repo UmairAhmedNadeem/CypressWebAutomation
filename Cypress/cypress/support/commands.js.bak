@@ -1,0 +1,49 @@
+Cypress.Commands.add('login', (user) => {
+  // Visit the login page
+  cy.visit('/login');
+  
+  // Accept cookies if the consent pop-up is present
+  cy.get('#onetrust-accept-btn-handler').click({ force: true });
+
+  // Fill in the email and password
+  cy.get('[name="email"]').type(user.email);
+  cy.get('[name="password"]').type(user.password);
+  
+  // Click the submit button
+  cy.get('input[data-testid="test-submit"]').click();
+
+  // Wait for the login API request
+  cy.wait('@loginRequest').then((interception) => {
+    expect(interception.response.statusCode).to.equal(200); // Verify success status code
+
+    // Get session ID and auth token from the response
+    const sessionId = interception.response.body.sessionId;
+    const authToken = interception.response.body.token;
+
+    // Store session ID and token in environment variables
+    Cypress.env('sessionId', sessionId);
+    Cypress.env('authToken', authToken);
+  });
+
+  // Verify redirection to the homepage after successful login
+  cy.url().should('eq', Cypress.config('baseUrl') + '/');
+  
+});
+
+// Save the session cookies
+Cypress.Commands.add('saveSession', () => {
+  cy.getCookies().then((cookies) => {
+    window.localStorage.setItem('cypressCookies', JSON.stringify(cookies));
+  });
+});
+
+// Restore the session cookies if they exist
+Cypress.Commands.add('restoreSession', () => {
+  const cookies = JSON.parse(window.localStorage.getItem('cypressCookies'));
+  if (cookies) {
+    cookies.forEach((cookie) => {
+      cy.setCookie(cookie.name, cookie.value);
+    });
+  }
+});
+
